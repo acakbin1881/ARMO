@@ -1,0 +1,12 @@
+# Dev artifacts from the Claude Design handoff bundle — not part of the live site
+uploads/
+screenshots/
+Hero.dc.html
+.thumbnail
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/
