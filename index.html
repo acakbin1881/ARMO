@@ -10,8 +10,11 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
+  html { scroll-behavior: auto; }
+  .armo-nav-link { transition: opacity .2s ease; }
+  .armo-nav-link:hover { opacity: 0.55; }
   @keyframes heroRise {
     from { transform: translateY(46px); }
     to { transform: translateY(0); }
@@ -21,8 +24,9 @@
     to { transform: translateY(0); }
   }
 </style>
+<script src="./image-slot.js"></script>
 </helmet>
-<div style="position:relative; min-height:100vh; width:100%; background:#000000; color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; overflow:hidden; display:flex; flex-direction:column; box-sizing:border-box; padding:40px clamp(32px,5vw,72px);">
+<div data-slide id="hero" style="position:relative; min-height:100vh; width:100%; background:#000000; color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; overflow:hidden; display:flex; flex-direction:column; box-sizing:border-box; padding:40px clamp(32px,5vw,72px);">
 
   <!-- Background video -->
   <video id="heroBg" autoplay muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; pointer-events:none;">
@@ -35,7 +39,12 @@
   <!-- Top bar -->
   <header style="position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; margin-top:-40px; margin-left:calc(-1 * clamp(32px,5vw,72px)); margin-right:calc(-1 * clamp(32px,5vw,72px)); padding:16px clamp(32px,5vw,72px); box-sizing:border-box; background:#ffffff; animation:softIn .8s cubic-bezier(.16,1,.3,1) both;">
     <div style="font-weight:900; font-size:26px; letter-spacing:0.02em; line-height:1; color:#1d1d1f;">ARMO</div>
-    <div style="border:1.5px solid #1d1d1f; border-radius:999px; padding:11px 22px; font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1d1d1f;">Free Trial</div>
+    <nav style="display:flex; align-items:center; gap:clamp(20px,3vw,40px);">
+      <a href="#science" class="armo-nav-link" style="font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1d1d1f; text-decoration:none;">Science</a>
+      <a href="#tutorial" class="armo-nav-link" style="font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1d1d1f; text-decoration:none;">Tutorial</a>
+      <a href="#vision" class="armo-nav-link" style="font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#1d1d1f; text-decoration:none;">Vision</a>
+    </nav>
+    <a href="#science" style="background:#ccff00; border:1.5px solid #ccff00; border-radius:999px; padding:12px 24px; font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#0a0a0a; text-decoration:none;">Free Trial</a>
   </header>
 
   <!-- Hero text -->
@@ -56,20 +65,121 @@
 </div>
 
 
-<!-- ===== Section 02 — The reward loop ===== -->
-<section data-screen-label="Reward loop" style="position:relative; min-height:100vh; width:100%; background:#ffffff; color:#000000; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:clamp(56px,8vh,120px) clamp(32px,5vw,72px); gap:clamp(20px,3vh,44px); overflow:hidden;">
+<!-- ===== Section 01 — Science ===== -->
+<section id="science" data-slide data-screen-label="Science" style="position:relative; min-height:100vh; width:100%; background:#ffffff; color:#1d1d1f; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:clamp(60px,9vh,120px) clamp(32px,5vw,80px); overflow:hidden;">
+  <div style="width:100%; max-width:1180px; margin:0 auto;">
 
-  <div style="width:100%; max-width:1180px; display:flex; flex-direction:column; align-items:center; text-align:center;">
-    <div data-reveal="0" style="font-size:13px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#9a9a9a;">02 / The science</div>
-    <h2 style="margin:16px 0 0; font-size:clamp(38px,6vw,80px); font-weight:600; letter-spacing:-0.015em; line-height:1.04; text-wrap:balance;"><span data-reveal="1" style="display:inline-block;">Your</span> <span data-reveal="2" style="display:inline-block;">brain</span> <span data-reveal="3" style="display:inline-block;">plays.</span><br><span data-reveal="4" style="display:inline-block;">Your</span> <span data-reveal="5" style="display:inline-block;">muscles</span> <span data-reveal="6" style="display:inline-block;">work.</span></h2>
-    <p data-reveal="7" style="margin:clamp(16px,2vh,26px) 0 0; max-width:580px; font-size:clamp(17px,1.4vw,21px); font-weight:400; line-height:1.5; letter-spacing:-0.01em; color:#6e6e73; text-wrap:pretty;">Your Apple Watch reads every curl, hold, and rep and turns it into a game. With your focus on the screen instead of the burn, the effort fades into the background &mdash; so you train harder and longer, and barely feel it.</p>
+    <div data-reveal="0" style="display:flex; align-items:center; gap:11px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:#1d1d1f;"><span style="width:9px; height:9px; background:#ccff00; box-shadow:0 0 0 1.5px #1d1d1f; display:inline-block;"></span>S01 / Science</div>
+
+    <h2 style="margin:clamp(18px,2.4vh,30px) 0 0; font-size:clamp(40px,5.6vw,82px); font-weight:600; letter-spacing:-0.022em; line-height:1.03;"><span data-reveal="1" style="display:inline-block;">Hard</span> <span data-reveal="2" style="display:inline-block;">on</span> <span data-reveal="3" style="display:inline-block;">your</span> <span data-reveal="4" style="display:inline-block;">muscles.</span><br><span style="color:#bcbcc2;"><span data-reveal="5" style="display:inline-block;">Easy</span> <span data-reveal="6" style="display:inline-block;">on</span> <span data-reveal="7" style="display:inline-block;">your</span> <span data-reveal="8" style="display:inline-block;">brain.</span></span></h2>
+
+    <div style="margin-top:clamp(30px,4.6vh,56px); display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,64px);">
+      <div data-reveal="3" style="border-top:1px solid #e4e4e7; padding-top:18px;">
+        <div style="font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#1d1d1f;">Focus</div>
+        <p style="margin:10px 0 0; font-size:clamp(16px,1.25vw,20px); font-weight:400; line-height:1.5; letter-spacing:-0.01em; color:#6e6e73; text-wrap:pretty;">When your mind is locked on the game, the burn fades. In studies, heart rates said <span style="color:#1d1d1f; font-weight:500;">&ldquo;hard&rdquo;</span> &mdash; players said <span style="color:#1d1d1f; font-weight:500;">&ldquo;light.&rdquo;</span></p>
+      </div>
+      <div data-reveal="4" style="border-top:1px solid #e4e4e7; padding-top:18px;">
+        <div style="font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#1d1d1f;">Form</div>
+        <p style="margin:10px 0 0; font-size:clamp(16px,1.25vw,20px); font-weight:400; line-height:1.5; letter-spacing:-0.01em; color:#6e6e73; text-wrap:pretty;">And you can&rsquo;t cheat. Sloppy reps crash the run. Clean form is the only way to score.</p>
+      </div>
+    </div>
+
+    <div data-reveal="5" style="margin-top:clamp(30px,4.6vh,58px); border-top:1px solid #e4e4e7; padding-top:clamp(20px,3vh,30px); display:grid; grid-template-columns:1.5fr 1fr; gap:clamp(28px,4vw,60px); align-items:center;">
+      <div style="display:flex; flex-direction:column; gap:18px; background:#0a0a0a; border-radius:20px; padding:clamp(20px,2.6vw,30px);">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <span style="font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; color:#8a8a8f;">Traditional</span>
+            <span style="font-size:clamp(16px,1.3vw,20px); font-weight:600; color:#8a8a8f;">50% quit</span>
+          </div>
+          <div style="height:10px; border-radius:999px; background:#26262a; overflow:hidden;"><div style="width:50%; height:100%; border-radius:999px; background:#46464c;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <span style="font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#ffffff;">Gamified</span>
+            <span style="font-size:clamp(16px,1.3vw,20px); font-weight:700; color:#ccff00;">80%+ stay</span>
+          </div>
+          <div style="height:10px; border-radius:999px; background:#26262a; overflow:hidden;"><div style="width:84%; height:100%; border-radius:999px; background:#ccff00;"></div></div>
+        </div>
+      </div>
+      <p style="margin:0; font-size:clamp(22px,2vw,32px); font-weight:600; letter-spacing:-0.018em; line-height:1.18; color:#1d1d1f; text-wrap:balance;">So we made training <span style="border-bottom:3px solid #ccff00; padding-bottom:1px;">a game.</span></p>
+    </div>
+
   </div>
+</section>
 
-  <div data-reveal="2" style="align-self:stretch; width:auto; max-width:none; margin-top:clamp(-40px,-3.5vh,-16px); margin-left:calc(-1 * clamp(32px,5vw,72px)); margin-right:calc(-1 * clamp(32px,5vw,72px)); -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);">
-    <img src="assets/apple-watch-wide.png" alt="Apple Watch" style="width:100%; height:auto; display:block;">
+<!-- ===== Section 02 — Tutorial ===== -->
+<section id="tutorial" data-slide data-screen-label="Tutorial" style="position:relative; min-height:100vh; width:100%; background:#000000; color:#ffffff; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:clamp(54px,7.5vh,104px) clamp(32px,5vw,80px); overflow:hidden;">
+  <div style="width:100%; max-width:1240px; margin:0 auto;">
+
+    <div data-reveal="0" style="display:flex; align-items:center; gap:11px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:#ffffff;"><span style="width:9px; height:9px; background:#ccff00; display:inline-block;"></span>S02 / Tutorial</div>
+    <h2 style="margin:clamp(14px,2vh,24px) 0 0; font-size:clamp(38px,5.2vw,76px); font-weight:600; letter-spacing:-0.022em; line-height:1.03;"><span data-reveal="1" style="display:inline-block;">Your</span> <span data-reveal="2" style="display:inline-block;">reps</span> <span data-reveal="3" style="display:inline-block;">are</span> <span data-reveal="4" style="display:inline-block;">the</span> <span data-reveal="5" style="display:inline-block; color:#ccff00;">controller.</span></h2>
+
+    <div style="margin-top:clamp(26px,4vh,48px); display:grid; grid-template-columns:0.78fr 1.22fr; gap:clamp(32px,5vw,72px); align-items:center;">
+      <div data-reveal="2" style="position:relative; width:100%; max-width:340px; aspect-ratio:4/5; border-radius:30px; overflow:hidden; background:#ffffff; box-shadow:0 30px 70px rgba(0,0,0,0.45); justify-self:center;">
+        <div style="position:absolute; top:0; left:50%; transform:translateX(-50%); height:100%; aspect-ratio:2816/1536;">
+          <img src="assets/apple-watch-black.png" alt="Apple Watch" style="width:100%; height:100%; display:block;">
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:clamp(14px,2.2vh,24px);">
+        <div data-reveal="3" style="display:grid; grid-template-columns:auto 1fr; gap:clamp(16px,1.6vw,26px); align-items:baseline; border-top:1px solid rgba(255,255,255,0.13); padding-top:clamp(14px,1.8vh,20px);">
+          <span style="font-size:clamp(20px,1.9vw,30px); font-weight:700; color:#ccff00; line-height:1;">01</span>
+          <div style="font-size:clamp(19px,1.65vw,25px); font-weight:600; letter-spacing:-0.012em; line-height:1.25;">Wear your Apple Watch.</div>
+        </div>
+        <div data-reveal="4" style="display:grid; grid-template-columns:auto 1fr; gap:clamp(16px,1.6vw,26px); align-items:baseline; border-top:1px solid rgba(255,255,255,0.13); padding-top:clamp(14px,1.8vh,20px);">
+          <span style="font-size:clamp(20px,1.9vw,30px); font-weight:700; color:#ccff00; line-height:1;">02</span>
+          <div><div style="font-size:clamp(19px,1.65vw,25px); font-weight:600; letter-spacing:-0.012em; line-height:1.25;">Pick a game.</div><div style="margin-top:4px; font-size:clamp(15px,1.2vw,18px); font-weight:400; color:rgba(255,255,255,0.6);">Curl to fly. Punch to fight.</div></div>
+        </div>
+        <div data-reveal="5" style="display:grid; grid-template-columns:auto 1fr; gap:clamp(16px,1.6vw,26px); align-items:baseline; border-top:1px solid rgba(255,255,255,0.13); padding-top:clamp(14px,1.8vh,20px);">
+          <span style="font-size:clamp(20px,1.9vw,30px); font-weight:700; color:#ccff00; line-height:1;">03</span>
+          <div><div style="font-size:clamp(19px,1.65vw,25px); font-weight:600; letter-spacing:-0.012em; line-height:1.25;">Move to play.</div><div style="margin-top:4px; font-size:clamp(15px,1.2vw,18px); font-weight:400; color:rgba(255,255,255,0.6);">Good form scores. Cheating crashes.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal="6" style="margin-top:clamp(24px,3.6vh,44px); border-top:1px solid rgba(255,255,255,0.13); padding-top:clamp(14px,1.8vh,20px); display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
+      <span style="font-size:clamp(15px,1.2vw,18px); color:rgba(255,255,255,0.6); text-wrap:pretty;">The game levels up as you get stronger.</span>
+      <span style="font-family:'Space Mono',ui-monospace,monospace; font-size:clamp(13px,1vw,16px); font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#ffffff; white-space:nowrap;">Open <span style="color:#ccff00;">·</span> Play <span style="color:#ccff00;">·</span> Train</span>
+    </div>
+
   </div>
+</section>
 
-</section></x-dc>
+<!-- ===== Section 03 — Vision ===== -->
+<section id="vision" data-slide data-screen-label="Vision" style="position:relative; min-height:100vh; width:100%; background:#f5f5f7; color:#1d1d1f; font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; padding:clamp(60px,9vh,120px) clamp(32px,5vw,80px); overflow:hidden;">
+  <div style="width:100%; max-width:1180px; margin:0 auto;">
+
+    <div data-reveal="0" style="display:flex; align-items:center; gap:11px; font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:#1d1d1f;"><span style="width:9px; height:9px; background:#ccff00; box-shadow:0 0 0 1.5px #1d1d1f; display:inline-block;"></span>S03 / Vision</div>
+
+    <h2 style="margin:clamp(16px,2.2vh,28px) 0 0; font-size:clamp(38px,5.4vw,78px); font-weight:600; letter-spacing:-0.022em; line-height:1.03;"><span data-reveal="1" style="display:inline-block;">Built</span> <span data-reveal="2" style="display:inline-block;">for</span> <span data-reveal="3" style="display:inline-block;">everyone</span> <span data-reveal="4" style="display:inline-block; color:#b6b6bd;">the</span> <span data-reveal="5" style="display:inline-block; color:#b6b6bd;">gym</span> <span data-reveal="6" style="display:inline-block; color:#b6b6bd;">lost.</span></h2>
+
+    <div data-reveal="3" style="margin-top:clamp(26px,4vh,46px); display:flex; flex-wrap:wrap; align-items:center; gap:0 clamp(16px,1.6vw,24px);">
+      <span style="font-size:clamp(17px,1.5vw,23px); font-weight:600; letter-spacing:-0.01em;">The serial quitter.</span>
+      <span style="font-size:clamp(17px,1.5vw,23px); font-weight:600; letter-spacing:-0.01em; color:#86868b;">The desk-bound.</span>
+      <span style="font-size:clamp(17px,1.5vw,23px); font-weight:600; letter-spacing:-0.01em;">The gamer.</span>
+      <span style="font-size:clamp(17px,1.5vw,23px); font-weight:600; letter-spacing:-0.01em; color:#86868b;">The grandparent.</span>
+    </div>
+    <p data-reveal="4" style="margin:clamp(12px,1.6vh,18px) 0 0; max-width:760px; font-size:clamp(17px,1.4vw,22px); font-weight:400; line-height:1.45; letter-spacing:-0.01em; color:#6e6e73; text-wrap:pretty;">Anyone who knows exercise works &mdash; but can&rsquo;t stand doing it.</p>
+
+    <div data-reveal="5" style="margin-top:clamp(28px,4.4vh,52px); border-top:1px solid #dededf; padding-top:clamp(22px,3vh,34px); display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,72px); align-items:start;">
+      <div>
+        <span style="display:inline-block; font-size:clamp(48px,6vw,88px); font-weight:600; letter-spacing:-0.03em; line-height:0.95;">1 in 3</span>
+        <p style="margin:12px 0 0; font-size:clamp(16px,1.25vw,20px); font-weight:400; line-height:1.5; color:#6e6e73; text-wrap:pretty;"><span style="color:#1d1d1f; font-weight:500;">adults worldwide don&rsquo;t move enough.</span> Games keep billions glued to screens &mdash; the same psychology can get them moving.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+        <p style="margin:0; font-size:clamp(26px,3vw,46px); font-weight:600; letter-spacing:-0.02em; line-height:1.18; text-wrap:balance;"><span style="color:#b6b6bd;">We&rsquo;re not fighting screens.</span><br><span style="background:#ccff00; color:#0a0a0a; padding:0.04em 0.22em; box-decoration-break:clone; -webkit-box-decoration-break:clone;">We&rsquo;re putting them to work.</span></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="deck-progress" style="position:fixed; top:50%; right:clamp(16px,2.2vw,34px); transform:translateY(-50%); z-index:50; display:flex; flex-direction:column; gap:10px; align-items:flex-end; mix-blend-mode:difference; pointer-events:none;">
+  <div class="deck-dot" style="width:30px; height:3px; background:#ffffff; border-radius:2px; opacity:1; transition:all .45s cubic-bezier(.16,1,.3,1);"></div>
+  <div class="deck-dot" style="width:14px; height:3px; background:#ffffff; border-radius:2px; opacity:0.35; transition:all .45s cubic-bezier(.16,1,.3,1);"></div>
+  <div class="deck-dot" style="width:14px; height:3px; background:#ffffff; border-radius:2px; opacity:0.35; transition:all .45s cubic-bezier(.16,1,.3,1);"></div>
+  <div class="deck-dot" style="width:14px; height:3px; background:#ffffff; border-radius:2px; opacity:0.35; transition:all .45s cubic-bezier(.16,1,.3,1);"></div>
+</div></x-dc>
 <template id="__bundler_thumbnail">
   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <rect width="100" height="100" fill="#000000"></rect>
@@ -91,6 +201,7 @@ class Component extends DCLogic {
     };
     init();
     this.setupReveals();
+    this.setupDeck();
   }
 
   setupReveals(){
@@ -164,6 +275,99 @@ class Component extends DCLogic {
       poll();
     };
     run();
+  }
+
+  setupDeck(){
+    const getPages = () => Array.from(document.querySelectorAll('[data-slide]'));
+    let index = 0;
+    let animating = false;
+
+    const easeInOutCubic = (t) => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+
+    const animateTo = (targetY, dur, cb) => {
+      const startY = window.scrollY || window.pageYOffset;
+      const dist = targetY - startY;
+      if(Math.abs(dist) < 1){ if(cb){ cb(); } return; }
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        window.scrollTo(0, startY + dist * easeInOutCubic(p));
+        if(p < 1){ requestAnimationFrame(step); }
+        else if(cb){ cb(); }
+      };
+      requestAnimationFrame(step);
+    };
+
+    const goTo = (i) => {
+      const pages = getPages();
+      i = Math.max(0, Math.min(pages.length - 1, i));
+      if(i === index || animating){ return; }
+      index = i;
+      paint(i);
+      animating = true;
+      const targetY = pages[i].getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+      animateTo(targetY, 1000, () => { setTimeout(() => { animating = false; }, 120); });
+    };
+
+    const paint = (i) => {
+      document.querySelectorAll('#deck-progress .deck-dot').forEach((d, k) => {
+        d.style.width = (k === i) ? '30px' : '14px';
+        d.style.opacity = (k === i) ? '1' : '0.35';
+      });
+    };
+
+    const syncIndex = () => {
+      const pages = getPages();
+      let best = 0, bestD = Infinity;
+      pages.forEach((p, idx) => {
+        const d = Math.abs(p.getBoundingClientRect().top);
+        if(d < bestD){ bestD = d; best = idx; }
+      });
+      index = best;
+      paint(best);
+    };
+
+    // Wheel — one gesture = one page
+    let wheelCooldown = false;
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if(animating || wheelCooldown){ return; }
+      if(Math.abs(e.deltaY) < 8){ return; }
+      wheelCooldown = true;
+      setTimeout(() => { wheelCooldown = false; }, 1150);
+      if(e.deltaY > 0){ goTo(index + 1); } else { goTo(index - 1); }
+    }, { passive: false });
+
+    // Keyboard
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '){ e.preventDefault(); goTo(index + 1); }
+      else if(e.key === 'ArrowUp' || e.key === 'PageUp'){ e.preventDefault(); goTo(index - 1); }
+    });
+
+    // Touch / swipe
+    let touchY = null;
+    window.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
+    window.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
+    window.addEventListener('touchend', (e) => {
+      if(touchY === null || animating){ touchY = null; return; }
+      const dy = touchY - e.changedTouches[0].clientY;
+      if(Math.abs(dy) > 40){ goTo(index + (dy > 0 ? 1 : -1)); }
+      touchY = null;
+    });
+
+    // Nav / anchor clicks glide to the page
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest && e.target.closest('a[href^="#"]');
+      if(!a){ return; }
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if(!target){ return; }
+      e.preventDefault();
+      const idx = getPages().indexOf(target);
+      if(idx >= 0){ goTo(idx); }
+    });
+
+    window.addEventListener('resize', syncIndex);
+    syncIndex();
   }
 }
 </script>

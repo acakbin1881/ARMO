@@ -6,6 +6,10 @@ Static site (no build step). The page is rendered by `support.js`, a self-contai
 runtime that loads React from a CDN at runtime and mounts the `<x-dc>` template in
 `index.html`.
 
+A full-page deck of four sections — **Hero**, **Science**, **Tutorial**, and **Vision** —
+navigated one slide per scroll gesture (wheel / arrow keys / swipe / nav links), with a
+right-edge progress indicator and scroll-triggered reveal animations.
+
 ## Run locally
 
 Serve the folder with any static server, e.g.:
@@ -24,6 +28,7 @@ default branch triggers a new deployment.
 
 ## Files
 
-- `index.html` — page markup + reveal animation logic
+- `index.html` — page markup + reveal/deck navigation logic
 - `support.js` — Claude Design runtime (renders the template)
-- `assets/` — background video and product imagery
+- `image-slot.js` — user-fillable image placeholder custom element
+- `assets/` — background video (`hero-bg.mp4`) and product imagery (`apple-watch-black.png`)
