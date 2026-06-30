@@ -4,6 +4,9 @@ screenshots/
 Hero.dc.html
 .thumbnail
 
+# Claude Code personal/local config
+.claude/settings.local.json
+
 # OS / editor
 .DS_Store
 Thumbs.db

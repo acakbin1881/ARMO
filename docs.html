@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>ARMO — Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:#ffffff; color:#1d1d1f;
+         font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue','Helvetica','Arial',sans-serif;
+         -webkit-font-smoothing:antialiased; }
+
+  a:focus-visible, .rail-link:focus-visible { outline:2px solid #0a0a0a; outline-offset:3px; border-radius:2px; }
+
+  /* ── Top reading-progress hairline (mobile only — the spine carries it on desktop) ── */
+  .read-bar { display:none; position:fixed; top:0; left:0; height:3px; width:0%; background:#ccff00; z-index:60;
+              box-shadow:0 0 0 0.5px rgba(10,10,10,.25); transition:width .12s linear; }
+
+  /* ── Header ── */
+  .docs-header { position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+                 gap:24px; padding:15px clamp(22px,5vw,72px); box-sizing:border-box; background:#ffffff; border-bottom:1px solid #e6e6e9; }
+  .brand { font-weight:900; font-size:25px; letter-spacing:0.02em; line-height:1; color:#0a0a0a; text-decoration:none; }
+  .nav-row { display:flex; align-items:center; gap:clamp(15px,2.4vw,34px); }
+  .nav-link { font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#0a0a0a; text-decoration:none; transition:opacity .2s ease; }
+  .nav-link:hover { opacity:.55; }
+  .nav-link.here { border-bottom:2px solid #ccff00; padding-bottom:2px; }
+  .cta { background:#ccff00; border:1.5px solid #ccff00; border-radius:999px; padding:11px 22px;
+         font-size:13px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#0a0a0a; text-decoration:none; }
+
+  /* ── Two-column shell ── */
+  .shell { display:grid; grid-template-columns:248px minmax(0,1fr); gap:clamp(40px,5.5vw,84px);
+           max-width:1160px; margin:0 auto; padding:clamp(34px,5vw,64px) clamp(22px,5vw,72px) 132px; box-sizing:border-box; }
+
+  /* ── Signature: reading-progress spine ── */
+  .rail { position:sticky; top:104px; align-self:start; height:max-content; }
+  .meter { display:flex; align-items:baseline; gap:9px; padding-bottom:22px; }
+  .meter-pct { font-family:'Archivo',sans-serif; font-weight:800; font-size:clamp(34px,3vw,44px);
+               letter-spacing:-0.04em; line-height:.8; color:#0a0a0a; font-variant-numeric:tabular-nums; }
+  .meter-label { font-family:'Space Mono',ui-monospace,monospace; font-size:11px; font-weight:700;
+                 letter-spacing:0.22em; text-transform:uppercase; color:#9a9aa2; }
+
+  .rail-nav { position:relative; padding-left:30px; }
+  .rail-track { position:absolute; left:5px; top:8px; bottom:8px; width:2px; background:#e6e6e9; border-radius:2px; }
+  .rail-fill  { position:absolute; left:0; top:0; width:100%; height:0%; background:#ccff00; border-radius:2px; transition:height .12s linear; }
+
+  .rail-link { position:relative; display:block; padding:11px 0; font-size:14px; line-height:1.3;
+               color:#86868b; text-decoration:none; transition:color .2s ease; }
+  .rail-link:hover { color:#0a0a0a; }
+  .rail-link .node { position:absolute; left:-28.5px; top:14px; width:9px; height:9px; background:#ffffff;
+                     box-shadow:0 0 0 1.5px #c6c6ce; transition:background .2s ease, box-shadow .2s ease; }
+  .rail-link.is-passed .node { background:#ccff00; box-shadow:0 0 0 1.5px #0a0a0a; }
+  .rail-link.is-active { color:#0a0a0a; font-weight:700; }
+  .rail-link.is-active .node { background:#ccff00; box-shadow:0 0 0 1.5px #0a0a0a; }
+
+  .rail-sub { display:block; padding:6px 0 6px 14px; font-size:12.5px; line-height:1.35;
+              color:#a8a8af; text-decoration:none; transition:color .2s ease; }
+  .rail-sub:hover { color:#0a0a0a; }
+  .rail-sub.is-active { color:#0a0a0a; font-weight:600; }
+
+  /* ── Reading column ── */
+  .body { max-width:740px; }
+  .body section { scroll-margin-top:104px; padding:clamp(42px,6vh,70px) 0; border-top:1px solid #e6e6e9; }
+  .body section:first-child { border-top:0; padding-top:6px; }
+
+  .eyebrow { display:flex; align-items:center; gap:11px; font-family:'Space Mono',ui-monospace,monospace;
+             font-size:12px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#0a0a0a; }
+  .eyebrow .marker { width:9px; height:9px; background:#ccff00; box-shadow:0 0 0 1.5px #0a0a0a; display:inline-block; }
+  .eyebrow .count { color:#b6b6bd; }
+
+  .body h2 { font-family:'Archivo',sans-serif; margin:clamp(15px,2.2vh,22px) 0 0; font-size:clamp(34px,4.6vw,58px);
+             font-weight:800; letter-spacing:-0.03em; line-height:1.0; color:#0a0a0a; text-wrap:balance; }
+  .body h3 { scroll-margin-top:104px; margin:clamp(30px,4vh,46px) 0 0; font-size:clamp(20px,1.9vw,27px);
+             font-weight:600; letter-spacing:-0.014em; line-height:1.22; color:#0a0a0a; }
+  .lede { margin:clamp(16px,2vh,22px) 0 0; font-size:clamp(19px,1.55vw,24px); font-weight:400; line-height:1.5;
+          letter-spacing:-0.012em; color:#1d1d1f; text-wrap:pretty; }
+  .body p { font-size:clamp(16px,1.15vw,18.5px); line-height:1.72; letter-spacing:-0.003em; color:#3a3a3e; text-wrap:pretty; margin:16px 0 0; }
+  .body h3 + p { margin-top:11px; }
+  .body strong { color:#0a0a0a; font-weight:600; }
+
+  /* lime-marked benefit list */
+  .benefits { list-style:none; margin:20px 0 0; padding:0; display:flex; flex-direction:column; gap:15px; }
+  .benefits li { position:relative; padding-left:30px; font-size:clamp(16px,1.15vw,18.5px); line-height:1.6; color:#3a3a3e; text-wrap:pretty; }
+  .benefits li::before { content:""; position:absolute; left:0; top:0.52em; width:10px; height:10px; background:#ccff00; box-shadow:0 0 0 1.5px #0a0a0a; }
+  .benefits li strong { color:#0a0a0a; font-weight:600; }
+
+  /* competitor evidence exhibit (numbers pulled from the copy) */
+  .exhibit { margin:24px 0 4px; border:1px solid #e6e6e9; border-radius:14px; overflow:hidden; }
+  .ex-cap { display:flex; align-items:center; gap:9px; padding:11px 18px; border-bottom:1px solid #e6e6e9; background:#fbfbfa;
+            font-family:'Space Mono',ui-monospace,monospace; font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#9a9aa2; }
+  .ex-cap .marker { width:8px; height:8px; background:#ccff00; box-shadow:0 0 0 1.5px #0a0a0a; }
+  .ex-row { display:grid; grid-template-columns:1fr auto; gap:6px 18px; align-items:center; padding:16px 18px; }
+  .ex-row + .ex-row { border-top:1px solid #ededf0; }
+  .ex-name { font-size:16px; font-weight:700; color:#0a0a0a; letter-spacing:-0.01em; }
+  .ex-stat { font-family:'Space Mono',ui-monospace,monospace; font-size:13.5px; font-weight:700; color:#0a0a0a; white-space:nowrap; text-align:right; }
+  .ex-verdict { grid-column:1 / -1; font-size:14px; color:#6e6e73; line-height:1.45; }
+  .ex-verdict b { color:#0a0a0a; font-weight:600; }
+
+  /* footer */
+  .foot { max-width:740px; margin-top:6px; padding-top:28px; border-top:1px solid #e6e6e9;
+          display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+  .foot .mono { font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#9a9aa2; }
+  .foot a { font-family:'Space Mono',ui-monospace,monospace; font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#0a0a0a; text-decoration:none; transition:opacity .2s ease; }
+  .foot a:hover { opacity:.55; }
+
+  /* reveal — transform-only so content is never left invisible */
+  [data-reveal] { will-change:transform; }
+
+  /* ── Mobile: spine collapses to a sticky horizontal chip nav ── */
+  @media (max-width:900px){
+    .read-bar { display:block; }
+    .shell { grid-template-columns:1fr; gap:0; padding-top:0; }
+    .rail { position:sticky; top:62px; z-index:40; background:#ffffff; border-bottom:1px solid #e6e6e9;
+            margin:0 calc(-1 * clamp(22px,5vw,72px)) clamp(22px,4vw,32px);
+            padding:11px clamp(22px,5vw,72px); display:flex; align-items:center; gap:14px; }
+    .meter { padding:0; flex:0 0 auto; }
+    .meter-pct { font-size:21px; }
+    .meter-label { display:none; }
+    .rail-nav { padding-left:0; display:flex; gap:2px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .rail-nav::-webkit-scrollbar { display:none; }
+    .rail-track, .rail-fill { display:none; }
+    .rail-link { padding:8px 11px; white-space:nowrap; border-bottom:2px solid transparent; }
+    .rail-link .node { display:none; }
+    .rail-link.is-active { border-bottom-color:#ccff00; }
+    .rail-sub { display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html { scroll-behavior:auto; }
+    [data-reveal] { transform:none !important; transition:none !important; }
+    .read-bar, .rail-fill { transition:none; }
+  }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div class="read-bar" id="readBar"></div>
+
+<!-- ===== Header ===== -->
+<header class="docs-header">
+  <a href="index.html" class="brand">ARMO</a>
+  <nav class="nav-row">
+    <a href="index.html#science" class="nav-link">Science</a>
+    <a href="index.html#tutorial" class="nav-link">Tutorial</a>
+    <a href="index.html#vision" class="nav-link">Vision</a>
+    <a href="docs.html" aria-current="page" class="nav-link here">Docs</a>
+  </nav>
+  <a href="index.html#science" class="cta">Free Trial</a>
+</header>
+
+<!-- ===== Shell ===== -->
+<div class="shell">
+
+  <!-- Reading-progress spine -->
+  <aside class="rail" aria-label="Documentation sections">
+    <div class="meter">
+      <span class="meter-pct" id="meterPct">0%</span>
+      <span class="meter-label">Read</span>
+    </div>
+    <nav class="rail-nav">
+      <div class="rail-track"><div class="rail-fill" id="railFill"></div></div>
+      <a class="rail-link" href="#welcome"><span class="node"></span>Welcome</a>
+      <a class="rail-link" href="#exercise"><span class="node"></span>A new way to exercise</a>
+      <a class="rail-link" href="#science"><span class="node"></span>Science</a>
+      <a class="rail-sub" href="#sci-easier" data-parent="science">Why games feel easier</a>
+      <a class="rail-sub" href="#sci-bodybrain" data-parent="science">Body &amp; brain together</a>
+      <a class="rail-sub" href="#sci-strength" data-parent="science">Real strength gains</a>
+      <a class="rail-sub" href="#sci-who" data-parent="science">Who benefits most</a>
+      <a class="rail-sub" href="#sci-vs" data-parent="science">Games vs. workouts</a>
+      <a class="rail-sub" href="#sci-wrap" data-parent="science">Wrap-up</a>
+      <a class="rail-link" href="#market"><span class="node"></span>Market Strategy</a>
+      <a class="rail-sub" href="#mkt-competitors" data-parent="market">Competitor analysis</a>
+      <a class="rail-sub" href="#mkt-app" data-parent="market">Launching as an app</a>
+      <a class="rail-sub" href="#mkt-bands" data-parent="market">Wearable bands</a>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="body">
+
+    <section id="welcome">
+      <div class="eyebrow" data-reveal="0"><span class="marker"></span>S01 <span class="count">/ 04</span></div>
+      <h2 data-reveal="1">Welcome</h2>
+      <p class="lede" data-reveal="2">This is the breakdown of healthtech start-up “Armo’’. Today, there are countless products that track human health. But Armo is directly boosting human health by using something a lot of people already have. A smart watch and a laptop camera.</p>
+    </section>
+
+    <section id="exercise">
+      <div class="eyebrow" data-reveal="0"><span class="marker"></span>S02 <span class="count">/ 04</span></div>
+      <h2 data-reveal="1">A new way to exercise</h2>
+      <p data-reveal="2">The reason most people quit the gym isn't laziness. Lifting the same weight, counting the same reps, staring at the same wall: the body could keep going, but the mind checks out. It’s also painful for most people: A bunch of exercises, hours of sessions every week, slow progress.</p>
+      <p data-reveal="2">What if there was a way to feel less tired? What if there was a way to turn these repetitive exercises into a game and gain more progress directly? What if there was a way to make exercising addictive? We found a way. Therefore, all you need is an apple watch.</p>
+      <p data-reveal="2">Exergaming flips the problem on its head. Strap a small motion sensor to your arm, link it to a game, and every rep now does something: It flies a bird, clears an obstacle, scores a point. You're not exercising anymore; you're playing. And people don't quit games.</p>
+    </section>
+
+    <section id="science">
+      <div class="eyebrow" data-reveal="0"><span class="marker"></span>S03 <span class="count">/ 04</span></div>
+      <h2 data-reveal="1">Science</h2>
+
+      <h3 id="sci-easier" data-reveal="2">Why Games Make Exercise Feel Easier</h3>
+      <p data-reveal="2">Your brain has a limited amount of attention to spend. In a normal workout, all of it gets swallowed by the burn in your muscles, your breathing, and the rep count, so the effort feels brutal even when you've got plenty left in the tank. Point that attention at a screen instead, and something remarkable happened in the studies: the same workout feels light. Your heart rate says "hard," but your mind says "easy." That gap is the secret weapon; it lets people train longer, harder, and more often without ever hitting the mental wall that ends most workouts early.</p>
+
+      <h3 id="sci-bodybrain" data-reveal="2">Working the Body and Brain at the Same Time</h3>
+      <p data-reveal="2">A standard weightlifting rep only asks one thing of you: move the weight. But the moment you have to react to a game while you lift (slow down to thread a gap, freeze to dodge an obstacle, decide in a split second) your brain and body are working as a team. That combination doesn't just burn more calories; it builds sharper focus, better memory, and stronger self control. You're not choosing between a workout and a brain-training app. You're getting both in the same motion.</p>
+
+      <h3 id="sci-strength" data-reveal="2">Real Muscle and Strength Gains</h3>
+      <p data-reveal="2">This isn't a glorified step counter. Because the sensor reads how fast and how smoothly you move, the game can insist on the things that actually build muscle and quietly refuse to reward you for cheating with momentum. As you improve, the game gets harder, which means your muscles never stop being challenged. The result is genuine strength and size, earned through a workout that felt like fun.</p>
+
+      <h3 id="sci-who" data-reveal="2">Who Benefits Most</h3>
+      <ul class="benefits" data-reveal="2">
+        <li>People who are willing to improve their health and body but find exercising boring, painful and repetitive.</li>
+        <li><strong>Kids.</strong> Parents can prevent their children from developing harmful habits, such as excessive screen time, and guide them to physical exercise, thus improving their health.</li>
+        <li><strong>Older Adults.</strong> The danger isn't just weakness, it's the fall that weakness invites. Game based strength training rebuilds the balance and leg strength that keep people on their feet, while removing the two barriers that stop most seniors from ever starting: boredom and fear.</li>
+        <li><strong>Group Workouts.</strong> People can compete during the group exercises, which makes workouts more engaging and fun.</li>
+      </ul>
+
+      <h3 id="sci-vs" data-reveal="2">Games vs. Regular Workouts</h3>
+      <p data-reveal="2">Put them side by side and it isn't close. Where ordinary programs lose most people within weeks, game-based training keeps the large majority coming back. Because it's enjoyable even when it's intense, which almost nothing else manages. And because the game keeps changing, your body never settles into autopilot. Same effort, dramatically better staying power.</p>
+
+      <h3 id="sci-wrap" data-reveal="2">Wrap-Up</h3>
+      <p data-reveal="2">Exercising becomes fun, easier, beneficial for memory and intelligent, more efficient, engaging. Also you don’t need to get expensive and complicated set ups. For all these advantages, the only thing you need is to launch Armo on your apple watch.</p>
+    </section>
+
+    <section id="market">
+      <div class="eyebrow" data-reveal="0"><span class="marker"></span>S04 <span class="count">/ 04</span></div>
+      <h2 data-reveal="1">Market Strategy</h2>
+
+      <h3 id="mkt-competitors" data-reveal="2">Competitor analysis</h3>
+      <p data-reveal="2">Our main competitors are Stealth Core Trainer and Quell. Stealth proved demand by selling 500K+ units for $179 each, but it is limited to gamifying only one exercise. Quell showed people want immersive fitness gaming, but its $269 hardware, subscription, PC/TV setup, and content-heavy game made it too complex and led to its going out of business. We think the winner is a lightweight software layer on devices people already own, starting simple and expanding beyond one exercise.</p>
+
+      <div class="exhibit" data-reveal="2">
+        <div class="ex-cap"><span class="marker"></span>What the market already proved</div>
+        <div class="ex-row">
+          <span class="ex-name">Stealth Core Trainer</span>
+          <span class="ex-stat">500K+ units · $179</span>
+          <span class="ex-verdict"><b>Proved the demand</b> — but gamifies only one exercise.</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-name">Quell</span>
+          <span class="ex-stat">$269 + subscription</span>
+          <span class="ex-verdict"><b>Proved the appetite</b> — but hardware, a PC/TV setup, and heavy content made it too complex. Shut down.</span>
+        </div>
+      </div>
+
+      <h3 id="mkt-app" data-reveal="2">Launching as an app</h3>
+      <p data-reveal="2">Armo will launch with a freemium subscription model as an app for all the smart watches. The free tier will let users try a few basic games and experience the core product. The premium tier will unlock a larger catalog of games, online leaderboards, multiplayer challenges, and personalized workouts.</p>
+
+      <h3 id="mkt-bands" data-reveal="2">Expanding into the market with wearable bands</h3>
+      <p data-reveal="2">People who don’t own smartwatches will be able to buy cost-effective, simple, and stylish straps designed for daily use. These bands will feature accelerometers and Bluetooth, allowing users to enjoy the same experience as smartwatch users.</p>
+    </section>
+
+    <div class="foot">
+      <span class="mono">Armo · Make Fitness Fun</span>
+      <a href="index.html">← Back to home</a>
+    </div>
+
+  </main>
+</div></x-dc>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" fill="#000000"></rect>
+    <text x="50" y="58" font-family="Archivo, sans-serif" font-size="22" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">ARMO</text>
+  </svg>
+</template>
+
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount(){
+    this.HEADER = 104; // keep in sync with scroll-margin-top / sticky offsets
+    this.setupProgress();
+    this.setupScrollSpy();
+    this.setupSmoothScroll();
+    this.setupReveals();
+  }
+
+  // Reading progress drives the spine fill, the top hairline, and the live counter.
+  setupProgress(){
+    const fill = document.getElementById('railFill');
+    const bar  = document.getElementById('readBar');
+    const pct  = document.getElementById('meterPct');
+    const primaries = Array.from(document.querySelectorAll('.rail-link[href^="#"]'));
+    const paint = () => {
+      const doc = document.documentElement;
+      const max = (document.body.scrollHeight || doc.scrollHeight) - window.innerHeight;
+      const p = max > 0 ? Math.min(1, Math.max(0, (window.scrollY || window.pageYOffset) / max)) : 0;
+      const whole = Math.round(p * 100);
+      if(fill){ fill.style.height = (p * 100) + '%'; }
+      if(bar){ bar.style.width = (p * 100) + '%'; }
+      if(pct){ pct.textContent = whole + '%'; }
+      // light each section's checkpoint once its heading scrolls under the header
+      const lineY = this.HEADER + 8;
+      primaries.forEach(l => {
+        const sec = document.getElementById(l.getAttribute('href').slice(1));
+        if(sec){ l.classList.toggle('is-passed', sec.getBoundingClientRect().top - lineY <= 0); }
+      });
+    };
+    paint();
+    window.addEventListener('scroll', paint, { passive: true });
+    window.addEventListener('resize', paint);
+    // bounded poll so the first paint is correct even before any scroll/layout settle
+    let n = 0;
+    const poll = () => { paint(); if(n++ < 20){ setTimeout(poll, 200); } };
+    poll();
+  }
+
+  setupScrollSpy(){
+    const run = () => {
+      const links = Array.from(document.querySelectorAll('.rail-nav a[href^="#"]'));
+      if(!links.length){ requestAnimationFrame(run); return; }
+
+      const entries = links
+        .map(a => ({ a, el: document.getElementById(a.getAttribute('href').slice(1)) }))
+        .filter(e => e.el);
+      if(!entries.length){ return; }
+
+      let current = null;
+
+      const paint = () => {
+        const line = this.HEADER + 8;
+        let activeIdx = 0;
+        for(let i = 0; i < entries.length; i++){
+          if(entries[i].el.getBoundingClientRect().top - line <= 0){ activeIdx = i; }
+        }
+        // bottom-of-page guard — force the last entry active at the very end
+        if(window.innerHeight + window.scrollY >= document.body.scrollHeight - 2){
+          activeIdx = entries.length - 1;
+        }
+
+        const next = entries[activeIdx].a;
+        if(next === current){ return; }
+        if(current){ current.classList.remove('is-active'); }
+        // clear any previously lit parent
+        links.forEach(l => { if(l.dataset.spyParent === '1'){ l.classList.remove('is-active'); l.dataset.spyParent = '0'; } });
+
+        next.classList.add('is-active');
+        current = next;
+
+        // keep the section's top-level link lit while a sub-anchor is active
+        const parentId = next.getAttribute('data-parent');
+        if(parentId){
+          const parentLink = document.querySelector('.rail-nav a[href="#' + parentId + '"]');
+          if(parentLink && parentLink !== next){ parentLink.classList.add('is-active'); parentLink.dataset.spyParent = '1'; }
+        }
+
+        // on the mobile horizontal nav, scroll the active chip into view
+        if(window.innerWidth <= 900 && next.scrollIntoView){
+          next.scrollIntoView({ block: 'nearest', inline: 'center' });
+        }
+      };
+
+      paint();
+      window.addEventListener('scroll', paint, { passive: true });
+      window.addEventListener('resize', paint);
+      let n = 0;
+      const poll = () => { paint(); if(n++ < 20){ setTimeout(poll, 200); } };
+      poll();
+    };
+    run();
+  }
+
+  setupSmoothScroll(){
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest && e.target.closest('.rail-nav a[href^="#"]');
+      if(!a){ return; }
+      const el = document.getElementById(a.getAttribute('href').slice(1));
+      if(!el){ return; }
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' }); // respects scroll-margin-top
+      if(history && history.replaceState){ history.replaceState(null, '', a.getAttribute('href')); }
+    });
+  }
+
+  setupReveals(){
+    const run = () => {
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      if(!els.length){ requestAnimationFrame(run); return; }
+
+      // transform-ONLY (opacity stays 1) so content can never be left invisible
+      els.forEach(el => {
+        el.style.transform = 'translateY(13px)';
+        el.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+        el.style.transitionDelay = ((parseFloat(el.getAttribute('data-reveal')) || 0) * 0.06) + 's';
+      });
+
+      const wh = () => window.innerHeight || document.documentElement.clientHeight;
+      const check = () => {
+        let remaining = false;
+        els.forEach(el => {
+          if(el.dataset.revealed === '1'){ return; }
+          const r = el.getBoundingClientRect();
+          if(r.top < wh() * 0.92 && r.bottom > 0){ el.dataset.revealed = '1'; el.style.transform = 'none'; }
+          else { remaining = true; }
+        });
+        return remaining;
+      };
+
+      const onScroll = () => { if(!check()){ window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); } };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+
+      const start = Date.now();
+      const poll = () => { if(check() && Date.now() - start < 4000){ setTimeout(poll, 200); } };
+      poll();
+    };
+    run();
+  }
+}
+</script>
+</body>
+</html>
