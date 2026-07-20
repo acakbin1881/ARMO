@@ -1,7 +1,7 @@
 import { motion } from "motion/react"
 
 import { SiteHeader } from "@/components/SiteHeader"
-import { EASE } from "@/lib/motion"
+import { EASE, stagger } from "@/lib/motion"
 
 const LINES = [
   { text: "Make", className: "text-outline-paper" },
@@ -40,9 +40,9 @@ export function Hero() {
         <motion.h1
           aria-label="Make Fitness Fun"
           className="stretch-expanded flex flex-col items-start font-black uppercase leading-[0.92] tracking-[-0.01em]"
+          variants={stagger(0.25, 0.13)}
           initial="hidden"
           animate="show"
-          transition={{ staggerChildren: 0.13, delayChildren: 0.25 }}
         >
           {LINES.map(({ text, className }) => (
             <span key={text} className="overflow-hidden py-[0.04em]">
@@ -65,8 +65,8 @@ export function Hero() {
 
       <motion.div
         className="relative z-10 max-w-xl px-[clamp(20px,5vw,72px)] pb-[clamp(28px,5vh,56px)]"
-        initial={{ opacity: 0, y: 32 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 42 }}
+        animate={{ y: 0 }}
         transition={{ delay: 0.9, duration: 0.8, ease: EASE }}
       >
         <h2 className="text-[clamp(26px,3.2vw,42px)] font-semibold leading-[1.08] tracking-[-0.012em]">

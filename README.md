@@ -1,34 +1,44 @@
 # ARMO
 
-Landing page for ARMO — *Make Fitness Fun.* Get addicted to fitness with an Apple Watch.
+Landing site for ARMO — *Make Fitness Fun.* Get addicted to fitness with an
+Apple Watch.
 
-Static site (no build step). The page is rendered by `support.js`, a self-contained
-runtime that loads React from a CDN at runtime and mounts the `<x-dc>` template in
-`index.html`.
+## Stack
 
-A full-page deck of four sections — **Hero**, **Science**, **Tutorial**, and **Vision** —
-navigated one slide per scroll gesture (wheel / arrow keys / swipe / nav links), with a
-right-edge progress indicator and scroll-triggered reveal animations.
+- **React 19 + TypeScript** on **Vite**
+- **Tailwind CSS v4** (CSS-first config in `src/index.css`) with **shadcn/ui**
+  primitives (`src/components/ui`)
+- **Motion** (Framer Motion) for staggered reveals, springy headline pops, and
+  the count-up retention bars — all reveals are transform-only so content is
+  never left invisible
+- **Lucide** icons, **react-router** (`/` landing deck, `/docs`)
 
-## Run locally
+### Design system
 
-Serve the folder with any static server, e.g.:
+Volt `#ccff00` on ink `#0a0a0a` and paper white. Type: **Archivo** (variable
+width axis — expanded for display), **Space Mono** for telemetry labels, and
+**Bodoni Moda** italic for editorial accents. Semantic tokens live in
+`src/index.css` (`@theme` + shadcn CSS variables).
+
+## Pages
+
+- `/` — four-slide scroll deck (Hero video, Science, Tutorial, Vision) with
+  CSS scroll-snap, a right-edge slide rail, and a floating frosted-capsule nav
+- `/docs` — the full breakdown, with a reading-progress spine (desktop) that
+  collapses to a chip nav + hairline progress bar on mobile
+
+## Develop
 
 ```bash
-npx serve .
+npm install
+npm run dev       # local dev server
+npm run build     # typecheck + production build to dist/
+npm run preview   # serve the production build
 ```
-
-Then open the printed URL. (Opening `index.html` directly via `file://` may block the
-CDN/font requests in some browsers — prefer a local server.)
 
 ## Deploy
 
-Deployed on Vercel as a static site — no framework, no build command. Pushing to the
-default branch triggers a new deployment.
-
-## Files
-
-- `index.html` — page markup + reveal/deck navigation logic
-- `support.js` — Claude Design runtime (renders the template)
-- `image-slot.js` — user-fillable image placeholder custom element
-- `assets/` — background video (`hero-bg.mp4`) and product imagery (`apple-watch-black.png`)
+Vercel builds with `npm run build` and serves `dist/` (see `vercel.json`,
+which also rewrites all routes to `index.html` for the SPA and redirects the
+legacy `/docs.html` URL to `/docs`). Pushing to the default branch triggers a
+deployment.

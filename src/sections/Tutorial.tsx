@@ -50,8 +50,8 @@ export function Tutorial() {
         <div className="mt-[clamp(26px,4vh,48px)] grid items-center gap-[clamp(28px,5vw,72px)] md:grid-cols-[0.78fr_1.22fr]">
           <motion.div
             className="relative aspect-4/5 w-full max-w-[340px] justify-self-center overflow-hidden rounded-[30px] bg-paper shadow-[0_30px_70px_rgb(0_0_0/0.45)]"
-            initial={{ opacity: 0, scale: 0.92 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ scale: 0.92 }}
+            whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ rotate: -1.5, scale: 1.02 }}

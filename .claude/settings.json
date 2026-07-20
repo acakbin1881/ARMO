@@ -8,7 +8,13 @@
       "Bash(disown)",
       "Read(//tmp/**)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/)",
-      "Bash(kill 11365)"
+      "Bash(kill 11365)",
+      "Bash(node /private/tmp/claude-501/-Users-acakbin1881-Projects-Armo/82bea6df-9ffe-45d1-b178-cc65db5baf95/scratchpad/capture.mjs)",
+      "Bash(node .capture.tmp.mjs)",
+      "Bash(git restore *)",
+      "Bash(git rm *)",
+      "Bash(lsof -ti:4173)",
+      "Bash(xargs kill)"
     ]
   },
   "enabledPlugins": {

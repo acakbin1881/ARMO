@@ -1,8 +1,7 @@
-# Dev artifacts from the Claude Design handoff bundle — not part of the live site
-uploads/
-screenshots/
-Hero.dc.html
-.thumbnail
+# Dependencies & build output
+node_modules/
+dist/
+*.tsbuildinfo
 
 # Claude Code personal/local config
 .claude/settings.local.json
@@ -13,5 +12,4 @@ Thumbs.db
 
 # Vercel
 .vercel/
-
-.vercel
+node_modules
