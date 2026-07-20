@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────────────────────
+   ARMO design system — volt arcade athletics
+   Dominant ink black + paper white, cut with volt #ccff00.
+   Type: Archivo (variable width 62–125) / Space Mono / Bodoni Moda italic.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+  --card: #ffffff;
+  --card-foreground: #1d1d1f;
+  --popover: #ffffff;
+  --popover-foreground: #1d1d1f;
+  --primary: #ccff00;
+  --primary-foreground: #0a0a0a;
+  --secondary: #f5f5f7;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f5f5f7;
+  --muted-foreground: #6e6e73;
+  --accent: #f0f0f2;
+  --accent-foreground: #0a0a0a;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: #e6e6e9;
+  --input: #e6e6e9;
+  --ring: #0a0a0a;
+  --radius: 1.125rem;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: #141416;
+  --card-foreground: #ffffff;
+  --popover: #141416;
+  --popover-foreground: #ffffff;
+  --primary: #ccff00;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1d1d1f;
+  --secondary-foreground: #ffffff;
+  --muted: #1d1d1f;
+  --muted-foreground: #a1a1a6;
+  --accent: #26262a;
+  --accent-foreground: #ffffff;
+  --destructive: #ff6369;
+  --destructive-foreground: #0a0a0a;
+  --border: rgb(255 255 255 / 0.13);
+  --input: rgb(255 255 255 / 0.2);
+  --ring: #ccff00;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@theme {
+  /* Brand */
+  --color-volt: #ccff00;
+  --color-volt-deep: #9fc700;
+  --color-ink: #0a0a0a;
+  --color-ink-2: #1d1d1f;
+  --color-paper: #ffffff;
+  --color-fog: #f5f5f7;
+
+  /* Type */
+  --font-sans:
+    "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Bodoni Moda", Didot, "Bodoni MT", serif;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-marquee: marquee 26s linear infinite;
+  --animate-float: float 5.5s ease-in-out infinite;
+  --animate-sheet-in: sheet-in 0.5s var(--ease-out-expo);
+  --animate-sheet-out: sheet-out 0.3s ease-in forwards;
+  --animate-overlay-in: overlay-in 0.35s ease-out;
+  --animate-overlay-out: overlay-out 0.25s ease-in forwards;
+
+  @keyframes sheet-in {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes sheet-out {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes overlay-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+/* Expanded athletic display type — Archivo's variable width axis */
+@utility stretch-expanded {
+  font-stretch: 125%;
+}
+@utility stretch-wide {
+  font-stretch: 112%;
+}
+@utility stretch-condensed {
+  font-stretch: 76%;
+}
+
+/* Outlined poster type (transparent fill, stroked edge) */
+@utility text-outline-paper {
+  color: transparent;
+  -webkit-text-stroke: 0.024em var(--color-paper);
+}
+@utility text-outline-ink {
+  color: transparent;
+  -webkit-text-stroke: 0.024em var(--color-ink);
+}
+
+/* Square volt checkpoint marker (eyebrows, list bullets, rail nodes) */
+@utility volt-marker {
+  width: 9px;
+  height: 9px;
+  background: var(--color-volt);
+  box-shadow: 0 0 0 1.5px currentColor;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* One slide per gesture on the landing deck — desktop pointers only */
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    html:has([data-snap-deck]) {
+      scroll-snap-type: y proximity;
+    }
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    .animate-marquee,
+    .animate-float {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Nav link with volt underline sweep */
+  .nav-underline {
+    position: relative;
+  }
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--color-volt);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .nav-underline:hover::after,
+  .nav-underline[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
