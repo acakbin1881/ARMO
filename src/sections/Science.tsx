@@ -1,7 +1,6 @@
 import { motion } from "motion/react"
 
 import { CountUp } from "@/components/CountUp"
-import { Eyebrow } from "@/components/Eyebrow"
 import { EASE, pop, rise, stagger, VIEWPORT } from "@/lib/motion"
 
 function PoppedWords({ text, className }: { text: string; className?: string }) {
@@ -47,20 +46,11 @@ export function Science() {
   return (
     <section
       id="science"
-      className="relative flex min-h-svh w-full snap-start flex-col justify-center overflow-hidden bg-paper px-[clamp(20px,5vw,80px)] py-[clamp(56px,9vh,120px)] text-ink-2"
+      className="relative flex min-h-svh w-full flex-col justify-center overflow-hidden bg-paper px-[clamp(20px,5vw,80px)] py-[clamp(56px,9vh,120px)] text-ink-2"
     >
       <div className="mx-auto w-full max-w-[1180px]">
-        <motion.div
-          variants={rise}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-        >
-          <Eyebrow code="S01" label="Science" />
-        </motion.div>
-
         <motion.h2
-          className="stretch-expanded mt-[clamp(18px,2.4vh,30px)] text-[clamp(36px,5.6vw,80px)] font-extrabold leading-[0.98] tracking-[-0.02em]"
+          className="text-[clamp(36px,5.6vw,80px)] font-extrabold leading-[0.98] tracking-[-0.02em]"
           variants={stagger(0.1, 0.06)}
           initial="hidden"
           whileInView="show"

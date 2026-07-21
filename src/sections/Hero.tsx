@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { motion } from "motion/react"
 
 import { SiteHeader } from "@/components/SiteHeader"
@@ -10,12 +11,26 @@ const LINES = [
 ]
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // React doesn't reliably set the `muted` attribute on <video>, and browsers
+  // block autoplay unless the element is provably muted. Force it via the ref,
+  // then kick off playback so the background loop always starts.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = true
+    const play = video.play()
+    if (play) play.catch(() => {})
+  }, [])
+
   return (
     <section
       id="hero"
-      className="dark relative flex min-h-svh w-full snap-start flex-col overflow-hidden bg-ink text-paper"
+      className="dark relative flex min-h-svh w-full flex-col overflow-hidden bg-ink text-paper"
     >
       <motion.video
+        ref={videoRef}
         className="absolute inset-0 z-0 size-full object-cover"
         autoPlay
         muted
@@ -39,7 +54,7 @@ export function Hero() {
       <div className="relative z-10 flex flex-1 flex-col justify-center px-[clamp(20px,5vw,72px)] pt-20 pb-6">
         <motion.h1
           aria-label="Make Fitness Fun"
-          className="stretch-expanded flex flex-col items-start font-black uppercase leading-[0.92] tracking-[-0.01em]"
+          className="flex flex-col items-start font-black uppercase leading-[0.92] tracking-[-0.01em]"
           variants={stagger(0.25, 0.13)}
           initial="hidden"
           animate="show"
@@ -77,11 +92,6 @@ export function Hero() {
             with an Apple Watch
           </span>
         </h2>
-        <p className="mt-4 text-[clamp(16px,1.4vw,20px)] leading-normal text-paper/85 [text-wrap:pretty]">
-          We bridge the &lsquo;dopamine gap&rsquo;. Every curl and every hold
-          delivers immediate digital rewards, creating a powerful reinforcement
-          loop that makes you actually crave your next workout.
-        </p>
       </motion.div>
     </section>
   )

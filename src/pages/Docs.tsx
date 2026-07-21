@@ -145,7 +145,7 @@ function DocSection({
     >
       <FadeIn>
         <Eyebrow code={code} label="04" className="text-ink" />
-        <h2 className="stretch-expanded mt-[clamp(15px,2.2vh,22px)] text-[clamp(32px,4.6vw,56px)] font-extrabold leading-none tracking-[-0.02em] text-ink [text-wrap:balance]">
+        <h2 className="mt-[clamp(15px,2.2vh,22px)] text-[clamp(32px,4.6vw,56px)] font-extrabold leading-none tracking-[-0.02em] text-ink [text-wrap:balance]">
           {title}
         </h2>
         {lede && (
@@ -183,7 +183,7 @@ function Rail({ progress, active }: { progress: number; active: string }) {
     >
       {/* Meter */}
       <div className="flex shrink-0 items-baseline gap-2.5 lg:pb-6">
-        <span className="stretch-expanded text-[21px] font-extrabold tracking-[-0.03em] tabular-nums text-ink lg:text-[clamp(34px,3vw,44px)]">
+        <span className="text-[21px] font-extrabold tracking-[-0.03em] tabular-nums text-ink lg:text-[clamp(34px,3vw,44px)]">
           {Math.round(progress * 100)}%
         </span>
         <span className="hidden font-mono text-[11px] font-bold tracking-[0.22em] uppercase text-muted-foreground lg:inline">

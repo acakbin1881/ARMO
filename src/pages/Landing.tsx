@@ -1,18 +1,10 @@
 import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 
-import { DeckRail } from "@/components/DeckRail"
 import { Hero } from "@/sections/Hero"
 import { Science } from "@/sections/Science"
 import { Tutorial } from "@/sections/Tutorial"
 import { Vision } from "@/sections/Vision"
-
-const SLIDES = [
-  { id: "hero", label: "Intro" },
-  { id: "science", label: "Science" },
-  { id: "tutorial", label: "Tutorial" },
-  { id: "vision", label: "Vision" },
-]
 
 export default function Landing() {
   const { hash } = useLocation()
@@ -36,14 +28,11 @@ export default function Landing() {
   }, [hash])
 
   return (
-    <div data-snap-deck>
-      <main id="main">
-        <Hero />
-        <Science />
-        <Tutorial />
-        <Vision />
-      </main>
-      <DeckRail slides={SLIDES} />
-    </div>
+    <main id="main">
+      <Hero />
+      <Science />
+      <Tutorial />
+      <Vision />
+    </main>
   )
 }

@@ -5,7 +5,8 @@
 /* ─────────────────────────────────────────────────────────────
    ARMO design system — volt arcade athletics
    Dominant ink black + paper white, cut with volt #ccff00.
-   Type: Archivo (variable width 62–125) / Space Mono / Bodoni Moda italic.
+   Type: Apple system stack — SF Pro / SF Mono / New York on Apple
+   hardware, metric-compatible fallbacks elsewhere. No webfonts.
    ───────────────────────────────────────────────────────────── */
 
 :root {
@@ -88,15 +89,17 @@
   --color-paper: #ffffff;
   --color-fog: #f5f5f7;
 
-  /* Type */
+  /* Type — Apple system faces */
   --font-sans:
-    "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: "Bodoni Moda", Didot, "Bodoni MT", serif;
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, "Cascadia Mono",
+    monospace;
+  --font-serif: ui-serif, "New York", Georgia, "Times New Roman", serif;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-marquee: marquee 26s linear infinite;
   --animate-float: float 5.5s ease-in-out infinite;
   --animate-sheet-in: sheet-in 0.5s var(--ease-out-expo);
   --animate-sheet-out: sheet-out 0.3s ease-in forwards;
@@ -135,14 +138,6 @@
       opacity: 0;
     }
   }
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
   @keyframes float {
     0%,
     100% {
@@ -152,17 +147,6 @@
       transform: translateY(-10px);
     }
   }
-}
-
-/* Expanded athletic display type — Archivo's variable width axis */
-@utility stretch-expanded {
-  font-stretch: 125%;
-}
-@utility stretch-wide {
-  font-stretch: 112%;
-}
-@utility stretch-condensed {
-  font-stretch: 76%;
 }
 
 /* Outlined poster type (transparent fill, stroked edge) */
@@ -188,13 +172,6 @@
     scroll-behavior: smooth;
   }
 
-  /* One slide per gesture on the landing deck — desktop pointers only */
-  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-    html:has([data-snap-deck]) {
-      scroll-snap-type: y proximity;
-    }
-  }
-
   body {
     @apply bg-background font-sans text-foreground antialiased;
     font-optical-sizing: auto;
@@ -215,7 +192,6 @@
     html {
       scroll-behavior: auto;
     }
-    .animate-marquee,
     .animate-float {
       animation: none;
     }

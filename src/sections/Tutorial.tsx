@@ -1,7 +1,5 @@
 import { motion } from "motion/react"
 
-import { Eyebrow } from "@/components/Eyebrow"
-import { Marquee } from "@/components/Marquee"
 import { pop, rise, stagger, VIEWPORT } from "@/lib/motion"
 
 const STEPS = [
@@ -14,20 +12,11 @@ export function Tutorial() {
   return (
     <section
       id="tutorial"
-      className="dark relative flex min-h-svh w-full snap-start flex-col justify-center overflow-hidden bg-ink px-[clamp(20px,5vw,80px)] pt-[clamp(48px,7vh,96px)] pb-[clamp(88px,12vh,128px)] text-paper"
+      className="dark relative flex min-h-svh w-full flex-col justify-center overflow-hidden bg-ink px-[clamp(20px,5vw,80px)] pt-[clamp(48px,7vh,96px)] pb-[clamp(56px,8vh,96px)] text-paper"
     >
       <div className="mx-auto w-full max-w-[1240px]">
-        <motion.div
-          variants={rise}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-        >
-          <Eyebrow code="S02" label="Tutorial" />
-        </motion.div>
-
         <motion.h2
-          className="stretch-expanded mt-[clamp(14px,2vh,24px)] text-[clamp(34px,5.2vw,74px)] font-extrabold leading-[0.98] tracking-[-0.02em]"
+          className="text-[clamp(34px,5.2vw,74px)] font-extrabold leading-[0.98] tracking-[-0.02em]"
           variants={stagger(0.1, 0.06)}
           initial="hidden"
           whileInView="show"
@@ -105,14 +94,6 @@ export function Tutorial() {
         >
           The game levels up as you get stronger.
         </motion.p>
-      </div>
-
-      {/* The game loop, looping */}
-      <div className="absolute inset-x-0 bottom-0 border-t border-paper/15 py-4">
-        <Marquee
-          items={["Open", "Play", "Train", "Repeat"]}
-          className="font-mono text-[13px] font-bold tracking-[0.22em] uppercase text-paper/70"
-        />
       </div>
     </section>
   )

@@ -24,15 +24,20 @@ type SiteHeaderProps = {
   variant: "landing" | "docs"
 }
 
-/** True once the page has left the very top — drives the float transition. */
-function useLifted(threshold = 12) {
+/**
+ * True once the page has left the very top — drives the float transition.
+ * Enter/exit thresholds differ so a scroll that hovers around the trigger
+ * point can't rapidly toggle the bar back and forth.
+ */
+function useLifted(enter = 28, exit = 6) {
   const [lifted, setLifted] = useState(false)
 
   useEffect(() => {
     let frame = 0
     const read = () => {
       frame = 0
-      setLifted(window.scrollY > threshold)
+      const y = window.scrollY
+      setLifted((was) => (was ? y > exit : y > enter))
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(read)
@@ -43,20 +48,19 @@ function useLifted(threshold = 12) {
       window.removeEventListener("scroll", onScroll)
       if (frame) cancelAnimationFrame(frame)
     }
-  }, [threshold])
+  }, [enter, exit])
 
   return lifted
 }
 
 /**
- * Pinned nav. At the top it sits flush against the page edge as part of the
- * layout; once scrolled it detaches into a floating, frosted glass capsule.
+ * Pinned nav. At rest it spans the full width, flush to the top and side
+ * edges; once scrolled it detaches into a floating capsule. The frosted glass
+ * is constant across both — only the geometry morphs.
  */
 export function SiteHeader({ variant }: SiteHeaderProps) {
   const onDocs = variant === "docs"
   const lifted = useLifted()
-  /* Landing rides a dark hero video until the glass takes over. */
-  const onDark = !onDocs && !lifted
 
   const sectionLink = (id: string, label: string, className: string) =>
     onDocs ? (
@@ -73,7 +77,7 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
     <header
       data-lifted={lifted ? "" : undefined}
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[padding] duration-[650ms] ease-out-expo",
+        "fixed inset-x-0 top-0 z-50 transition-[padding] duration-[900ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
         lifted
           ? "px-[clamp(12px,3vw,26px)] pt-[clamp(10px,1.4vw,16px)]"
           : "px-0 pt-0"
@@ -81,23 +85,30 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
     >
       <div
         className={cn(
-          "mx-auto flex h-14 max-w-[1320px] items-center justify-between gap-4 px-[clamp(20px,5vw,60px)]",
-          "transition-[background-color,border-color,box-shadow,border-radius,backdrop-filter,max-width,color] duration-[650ms] ease-out-expo",
-          "border border-transparent",
+          /* Identical frosted glass in both states — only the geometry morphs:
+             full-bleed bar flush to the top at rest, floating pill once scrolled. */
+          "mx-auto flex items-center justify-between gap-4",
+          "bg-white/60 text-ink backdrop-blur-[22px] backdrop-saturate-[180%]",
+          "transition-[height,box-shadow,border-radius,max-width,padding] duration-[900ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
           lifted
-            ? "max-w-[1140px] rounded-full border-black/[0.07] bg-white/65 text-ink shadow-[0_1px_1px_rgb(0_0_0/0.03),0_8px_28px_-12px_rgb(0_0_0/0.16)] backdrop-blur-2xl backdrop-saturate-150"
-            : cn(
-                "rounded-none shadow-none",
-                onDocs
-                  ? "border-b-border bg-paper text-ink"
-                  : "bg-transparent text-paper"
+            ? cn(
+                "h-[52px] max-w-[1140px] rounded-full px-[clamp(20px,5vw,60px)]",
+                /* hairline ring + inner top highlight + soft layered ambient shadow */
+                "shadow-[0_0_0_0.5px_rgb(0_0_0/0.07),inset_0_0.5px_0_0_rgb(255_255_255/0.55),0_1px_2px_rgb(0_0_0/0.04),0_10px_20px_-10px_rgb(0_0_0/0.10),0_28px_50px_-20px_rgb(0_0_0/0.14)]"
+              )
+            : /* flush to the screen edges: no lift, just a hairline seam below.
+                 100vw rather than `none` so max-width can actually interpolate
+                 into the pill width — `none` is not an animatable value. */
+              cn(
+                "h-14 max-w-[100vw] rounded-none px-[clamp(16px,2.2vw,30px)]",
+                "shadow-[0_0.5px_0_0_rgb(0_0_0/0.06)]"
               )
         )}
       >
         <Link
           to="/"
           aria-label="ARMO home"
-          className="stretch-expanded text-lg font-black tracking-[0.04em]"
+          className="text-lg font-black tracking-[0.04em]"
         >
           ARMO
         </Link>
@@ -120,9 +131,7 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
               "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold tracking-[0.14em] uppercase transition-colors duration-300",
               onDocs
                 ? "border-volt bg-volt text-ink"
-                : onDark
-                  ? "border-white/25 bg-white/10 hover:border-volt hover:bg-volt hover:text-ink"
-                  : "border-volt/60 bg-volt/15 hover:bg-volt"
+                : "border-volt/60 bg-volt/15 hover:bg-volt"
             )}
           >
             Docs <ArrowRight className="size-3" aria-hidden="true" />
@@ -144,10 +153,7 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
             <button
               type="button"
               aria-label="Open menu"
-              className={cn(
-                "-mr-1 rounded-full p-2 transition-colors md:hidden",
-                onDark ? "hover:bg-white/10" : "hover:bg-black/[0.05]"
-              )}
+              className="-mr-1 rounded-full p-2 transition-colors hover:bg-black/[0.05] md:hidden"
             >
               <Menu className="size-5" />
             </button>
@@ -175,7 +181,7 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
                           <span className="font-mono text-xs font-bold text-volt">
                             0{i + 1}
                           </span>
-                          <span className="stretch-expanded text-4xl font-extrabold uppercase transition-colors group-hover:text-volt">
+                          <span className="text-4xl font-extrabold uppercase transition-colors group-hover:text-volt">
                             {label}
                           </span>
                         </Link>
@@ -187,7 +193,7 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
                           <span className="font-mono text-xs font-bold text-volt">
                             0{i + 1}
                           </span>
-                          <span className="stretch-expanded text-4xl font-extrabold uppercase transition-colors group-hover:text-volt">
+                          <span className="text-4xl font-extrabold uppercase transition-colors group-hover:text-volt">
                             {label}
                           </span>
                         </a>

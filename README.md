@@ -15,9 +15,10 @@ Apple Watch.
 
 ### Design system
 
-Volt `#ccff00` on ink `#0a0a0a` and paper white. Type: **Archivo** (variable
-width axis — expanded for display), **Space Mono** for telemetry labels, and
-**Bodoni Moda** italic for editorial accents. Semantic tokens live in
+Volt `#ccff00` on ink `#0a0a0a` and paper white. Type is the **Apple system
+stack** — SF Pro for display and text, SF Mono for telemetry labels, and New
+York italic for editorial accents on Apple hardware, with metric-compatible
+fallbacks elsewhere (no webfont requests). Semantic tokens live in
 `src/index.css` (`@theme` + shadcn CSS variables).
 
 ## Pages
