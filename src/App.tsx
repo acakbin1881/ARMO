@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 
+import Admin from "@/pages/Admin"
 import Docs from "@/pages/Docs"
 import Landing from "@/pages/Landing"
 
@@ -15,6 +16,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/docs" element={<Docs />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<Landing />} />
       </Routes>
     </>

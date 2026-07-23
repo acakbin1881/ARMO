@@ -10,6 +10,9 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Local env (real signup endpoint lives here; .env.example is committed)
+.env.local
+
 # Vercel
 .vercel/
 node_modules

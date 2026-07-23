@@ -5,5 +5,5 @@
     { "source": "/docs.html", "destination": "/docs", "permanent": true },
     { "source": "/index.html", "destination": "/", "permanent": true }
   ],
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
 }

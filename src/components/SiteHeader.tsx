@@ -3,6 +3,7 @@ import { motion } from "motion/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+import { EarlyAccessDialog } from "@/components/EarlyAccessDialog"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -61,6 +62,7 @@ function useLifted(enter = 28, exit = 6) {
 export function SiteHeader({ variant }: SiteHeaderProps) {
   const onDocs = variant === "docs"
   const lifted = useLifted()
+  const [earlyOpen, setEarlyOpen] = useState(false)
 
   const sectionLink = (id: string, label: string, className: string) =>
     onDocs ? (
@@ -139,12 +141,11 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Button asChild className="hidden md:inline-flex">
-            {onDocs ? (
-              <Link to="/#science">Free Trial</Link>
-            ) : (
-              <a href="#science">Free Trial</a>
-            )}
+          <Button
+            className="hidden md:inline-flex"
+            onClick={() => setEarlyOpen(true)}
+          >
+            Early Access
           </Button>
 
           {/* Mobile menu */}
@@ -210,12 +211,12 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
               transition={{ delay: 0.45, duration: 0.5, ease: EASE }}
             >
               <SheetClose asChild>
-                <Button asChild size="lg" className="w-full">
-                  {onDocs ? (
-                    <Link to="/#science">Free Trial</Link>
-                  ) : (
-                    <a href="#science">Free Trial</a>
-                  )}
+                <Button
+                  size="lg"
+                  className="w-full"
+                  onClick={() => setEarlyOpen(true)}
+                >
+                  Early Access
                 </Button>
               </SheetClose>
             </motion.div>
@@ -223,6 +224,8 @@ export function SiteHeader({ variant }: SiteHeaderProps) {
         </Sheet>
         </div>
       </div>
+
+      <EarlyAccessDialog open={earlyOpen} onOpenChange={setEarlyOpen} />
     </header>
   )
 }

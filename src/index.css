@@ -105,6 +105,8 @@
   --animate-sheet-out: sheet-out 0.3s ease-in forwards;
   --animate-overlay-in: overlay-in 0.35s ease-out;
   --animate-overlay-out: overlay-out 0.25s ease-in forwards;
+  --animate-dialog-in: dialog-in 0.5s var(--ease-out-expo);
+  --animate-dialog-out: dialog-out 0.22s ease-in forwards;
 
   @keyframes sheet-in {
     from {
@@ -136,6 +138,26 @@
     }
     to {
       opacity: 0;
+    }
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes dialog-out {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
     }
   }
   @keyframes float {
