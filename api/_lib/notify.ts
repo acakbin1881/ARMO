@@ -1,4 +1,4 @@
-import { Resend } from "resend"
+import nodemailer from "nodemailer"
 import twilio from "twilio"
 
 const VOLT = "#ccff00"
@@ -33,22 +33,31 @@ function confirmationHtml(): string {
   </div>`
 }
 
-/** Send the confirmation email. No-ops (with a warning) if Resend isn't configured. */
+/**
+ * Send the confirmation email from a Gmail account via SMTP.
+ * Requires GMAIL_USER + GMAIL_APP_PASSWORD (a 16-char Google App Password —
+ * generated at myaccount.google.com/apppasswords with 2-Step Verification on).
+ * No-ops (with a warning) if unconfigured.
+ */
 export async function sendEmail(to: string): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM
-  if (!apiKey || !from) {
-    console.warn("[notify] Resend not configured (RESEND_API_KEY/RESEND_FROM) — email skipped.")
+  const user = process.env.GMAIL_USER
+  const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s+/g, "") // strip spaces
+  if (!user || !pass) {
+    console.warn("[notify] Gmail not configured (GMAIL_USER/GMAIL_APP_PASSWORD) — email skipped.")
     return
   }
-  const resend = new Resend(apiKey)
-  const { error } = await resend.emails.send({
-    from,
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: { user, pass },
+  })
+  await transporter.sendMail({
+    from: `ARMO <${user}>`,
     to,
     subject: "You're on the ARMO early access list",
     html: confirmationHtml(),
   })
-  if (error) throw new Error(`Resend error: ${error.message}`)
 }
 
 /** Send the confirmation SMS. No-ops (with a warning) if Twilio isn't configured. */
